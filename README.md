@@ -15,8 +15,8 @@ This library supports:
 
 #Install
 
-Install with [Bower](http://bower.io): `bower install opusonline-eventemitter.js`
-Install with [NPM](https://www.npmjs.org/): `npm install opusonline-eventemitter.js`
+* Install with [Bower](http://bower.io): `bower install opusonline-eventemitter.js`
+* Install with [NPM](https://www.npmjs.org/): `npm install opusonline-eventemitter.js`
 
 #Usage
 
