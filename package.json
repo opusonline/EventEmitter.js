@@ -1,0 +1,17 @@
+{
+  "name": "opusonline-eventemitter.js",
+  "version": "1.1.0",
+  "author": "Stefan Benicke <stefan.benicke@gmail.com>",
+  "description": "Javascript EventEmitter. The best you'll get ^^",
+  "main": "EventEmitter.js",
+  "keywords": [
+    "eventemitter",
+    "javascript",
+    "opusonline"
+   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opusonline/EventEmitter.js.git"
+  },
+  "license": "MIT"
+}
