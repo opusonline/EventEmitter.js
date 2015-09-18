@@ -13,6 +13,12 @@ This library supports:
 * includes inherit method and noConflict
 * amd and node support
 
+#Support
+
+Minimum IE 9, Chrome 5, Firefox 4, Opera 10.5, Safari 5, Mobile browsers, Node
+
+For older browser support, a `compatible` version is added.
+
 #Install
 
 * Install with [Bower](http://bower.io): `bower install opusonline-eventemitter.js`
@@ -88,11 +94,12 @@ ee.on('go.now', go); // namespace
 ee.on('go.now', go, goFurther); // namespace, multiple listeners
 ee.on(['go.now', 'foo'], go, goFurther); // multiple events including namespace, multiple listeners
 ee.on('go', [go, person]); // listeners context
+ee.on('go', go.bind(person)); // listeners context in native way
 ```
 
 ###once
 
-Includes all possible parameters like on.
+Includes all possible parameters like `on`. The event `removeListener` is called *after* execution.
 
 ```javascript
 var ee = new EventEmitter();
