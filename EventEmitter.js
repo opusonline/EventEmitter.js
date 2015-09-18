@@ -1,7 +1,7 @@
 /*!
- * Event Emitter (the best you'll get ^^)
+ * Event Emitter (the best you'll  get ^^)
  * author: Stefan Benicke
- * version: 1.0.0
+ * version: 1.1.0
  * url: https://github.com/opusonline/EventEmitter.js
  * license: MIT
  * features:
@@ -11,7 +11,7 @@
  * - listeners: multiple events, namespaces, all at once
  * - newListener/removeListener events
  * - chainable
- * - includes inherit method
+ * - includes inherit method and noConflict
  * inspired by:
  * - https://nodejs.org/api/events.html
  * - http://radio.uxder.com/ (radiojs)
@@ -19,11 +19,13 @@
  * - https://github.com/asyncly/EventEmitter2
  * - https://github.com/primus/eventemitter3
  * support:
- * - ie9, safari 5, opera 10.5, chrome 5, ff 4, mobile
+ * - ie9, safari 5, opera 10.5, chrome 5, ff 4, mobile, node
  */
 ;
 (function (global, undefined) {
     'use strict';
+
+    var existingEventEmitter = global.EventEmitter;
 
     function EE(listener, namespaces, once) {
         if (Array.isArray(listener)) {
@@ -40,9 +42,22 @@
     function EventEmitter() {
     }
 
-    EventEmitter.inherits = function inherits(object) {
-        object.prototype = Object.create(EventEmitter.prototype);
-        object.prototype.constructor = object;
+    EventEmitter.noConflict = function noConflict() {
+        global.EventEmitter = existingEventEmitter;
+        return EventEmitter;
+    };
+
+    // adapted from https://github.com/nodejs/node-v0.x-archive/blob/master/lib/util.js#L634
+    EventEmitter.inherits = function inherits(ctor) {
+        ctor.super_ = EventEmitter;
+        ctor.prototype = Object.create(EventEmitter.prototype, {
+            constructor: {
+                value: ctor,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
     };
 
     EventEmitter.prototype._events = undefined;
@@ -341,7 +356,11 @@
 
     /* end helper */
 
-    if (typeof module !== 'undefined') {
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return EventEmitter;
+        });
+    } else if (typeof module !== 'undefined') {
         module.exports = EventEmitter;
     } else {
         global.EventEmitter = EventEmitter;
