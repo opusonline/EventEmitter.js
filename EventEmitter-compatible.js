@@ -1,7 +1,7 @@
 /*!
  * Event Emitter (the best you'll get ^^)
  * author: Stefan Benicke
- * version: 1.1.0
+ * version: 1.1.1
  * url: https://github.com/opusonline/EventEmitter.js
  * license: MIT
  * features:
@@ -128,7 +128,7 @@
         }
         for (i = 0, n = this._events[event].length; i < n; i++) {
             if (allInArray(namespaces, this._events[event][i].namespaces)) {
-                this._events[event][i].listener.apply(this._events[event].context, args);
+                this._events[event][i].listener.apply(this._events[event][i].context, args);
                 if (this._events[event][i].once) {
                     once = true;
                 }
