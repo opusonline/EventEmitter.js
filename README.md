@@ -118,6 +118,7 @@ ee.off('go', go, foo); // multiple listeners
 ee.off('go.now', go); // namespace
 ee.off('.now', go); // namespace and listener
 ee.off('.now'); // all listener from event namespace
+ee.off('go', [go, person]); // remove listener with according context
 ```
 
 ###emit
