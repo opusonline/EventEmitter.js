@@ -1,7 +1,7 @@
 /*!
- * Event Emitter (the best you'll  get ^^)
+ * Event Emitter (the best you'll get ^^)
  * author: Stefan Benicke
- * version: 1.1.1
+ * version: 1.2.0
  * url: https://github.com/opusonline/EventEmitter.js
  * license: MIT
  * features:
@@ -25,16 +25,21 @@
 (function (global, undefined) {
     'use strict';
 
+    var nativeBind;
     var existingEventEmitter = global.EventEmitter;
 
     function EE(listener, namespaces, once) {
+        var context;
         if (Array.isArray(listener)) {
             this.listener = listener[0];
-            this.context = listener[1];
+            context = listener[1];
         } else {
             this.listener = listener;
-            this.context = global;
         }
+        if (this.listener.hasOwnProperty('boundThis')) {
+            context = this.listener.boundThis; // bound functions are prefered against apply context
+        }
+        this.context = context;
         this.namespaces = namespaces;
         this.once = once || false;
     }
@@ -60,15 +65,16 @@
         });
     };
 
-    EventEmitter.prototype._events = undefined;
-
     EventEmitter.prototype.listeners = function listeners(event) {
         var i, n, namespaces, result = [];
+        if (typeof this._events === 'undefined') {
+            return result;
+        }
         if (arguments.length === 0 || typeof event === 'undefined') {
             for (event in this._events) {
                 if (this._events.hasOwnProperty(event)) {
                     for (i = 0, n = this._events[event].length; i < n; i++) {
-                        result.push(this._events[event][i]); // copy
+                        result.push(this._events[event][i]);
                     }
                 }
             }
@@ -88,7 +94,7 @@
                 if (this._events.hasOwnProperty(event)) {
                     for (i = 0, n = this._events[event].length; i < n; i++) {
                         if (allInArray(namespaces, this._events[event][i].namespaces)) {
-                            result.push(this._events[event][i]); // copy
+                            result.push(this._events[event][i]);
                         }
                     }
                 }
@@ -99,7 +105,7 @@
             }
             for (i = 0, n = this._events[event].length; i < n; i++) {
                 if (allInArray(namespaces, this._events[event][i].namespaces)) {
-                    result.push(this._events[event][i]); // copy
+                    result.push(this._events[event][i]);
                 }
             }
         }
@@ -205,7 +211,7 @@
             if (this._events.hasOwnProperty('removeListener')) {
                 removeAndNotifyEvent.call(this);
             } else {
-                this._events = undefined;
+                delete this._events;
             }
         } else { // arguments.length > 0
             if (typeof event === 'undefined') {
@@ -352,6 +358,27 @@
             source.push(target);
         }
         return source;
+    }
+
+    // shim to reach bound context
+    if (Function.prototype.bind) {
+        nativeBind = Function.prototype.bind;
+        Function.prototype.bind = function(oThis) {
+            var fn = this;
+            var args = Array.prototype.slice.call(arguments, 1);
+            var boundFn = nativeBind.apply(fn, arguments);
+            return Object.defineProperties(boundFn, {
+                boundThis: {
+                    value: oThis
+                },
+                boundArgs: {
+                    value: args
+                },
+                targetFunction: {
+                    value: fn
+                }
+            });
+        };
     }
 
     /* end helper */
