@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/v/opusonline-eventemitter.js.svg?style=flat)](https://npmjs.org/package/opusonline-eventemitter.js)
+[![downloads](https://img.shields.io/npm/dm/opusonline-eventemitter.js.svg?style=flat)](https://npmjs.org/package/opusonline-eventemitter.js)
+
 EventEmitter.js
 ===============
 
