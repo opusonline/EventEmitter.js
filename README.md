@@ -16,20 +16,20 @@ This library supports:
 * includes inherit method and noConflict
 * amd and node support
 
-#Support
+# Support
 
 Minimum IE 9, Chrome 5, Firefox 4, Opera 10.5, Safari 5, Mobile browsers, Node
 
 For older browser support, a `compatible` version is added.
 
-#Install
+# Install
 
 * Install with [Bower](http://bower.io): `bower install opusonline-eventemitter.js`
 * Install with [NPM](https://www.npmjs.org/): `npm install opusonline-eventemitter.js`
 
-#Usage
+# Usage
 
-###Example
+### Example
 
 ```javascript
 function Foo() {
@@ -67,15 +67,15 @@ foo.emit(['foo', 'pow'], arg1, arg2); // emit multiple events at once
 
 foo.off('.bar'); // namespaces
 ```
-##Methods
+## Methods
 
-###noConflict
+### noConflict
 
 ```javascript
 var ee = EventEmitter.noConflict();
 ```
 
-###inherits
+### inherits
 
 Build in `inherits` method. In node you can use util.inherits(ctor, EventEmitter) instead or the build in method.
 
@@ -86,7 +86,7 @@ function Foo() {
 EventEmitter.inherits(Foo);
 ```
 
-###on (alias: addListener)
+### on (alias: addListener)
 
 ```javascript
 var ee = new EventEmitter();
@@ -100,7 +100,7 @@ ee.on('go', [go, person]); // listeners context
 ee.on('go', go.bind(person)); // listeners context in native way
 ```
 
-###once
+### once
 
 Includes all possible parameters like `on`. The event `removeListener` is called *after* execution.
 
@@ -109,7 +109,7 @@ var ee = new EventEmitter();
 ee.once('go', go);
 ```
 
-###off (alias: removeListener, removeAllListeners)
+### off (alias: removeListener, removeAllListeners)
 
 ```javascript
 var ee = new EventEmitter();
@@ -124,7 +124,7 @@ ee.off('.now'); // all listener from event namespace
 ee.off('go', [go, person]); // remove listener with according context
 ```
 
-###emit
+### emit
 
 ```javascript
 var ee = new EventEmitter();
@@ -134,7 +134,7 @@ ee.emit('go.now'); // namespace
 ee.emit(['go', 'foo'], now); // multiple events
 ```
 
-###listeners
+### listeners
 
 ```javascript
 var ee = new EventEmitter();
@@ -144,7 +144,7 @@ ee.listeners('go', 'foo'); // multiple events
 ee.listeners('.now'); // namespace
 ```
 
-###newListener, removeListener events
+### newListener, removeListener events
 
 `newListener` is always fired *after* added to list of events. `removeListener` is always fired *before* removing from list of events.
 `ee` is an object containing `listener, context, namespaces, once`.
