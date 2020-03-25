@@ -24,8 +24,8 @@ For older browser support, a `compatible` version is added.
 
 # Install
 
-* Install with [Bower](http://bower.io): `bower install opusonline-eventemitter.js`
-* Install with [NPM](https://www.npmjs.org/): `npm install opusonline-eventemitter.js`
+- Install with [yarn](https://yarnpkg.com/): `yarn add opusonline-eventemitter.js`
+* Install with [npm](https://www.npmjs.org/): `npm install opusonline-eventemitter.js`
 
 # Usage
 
